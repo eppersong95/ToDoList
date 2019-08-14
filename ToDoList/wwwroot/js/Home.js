@@ -15,7 +15,7 @@
 
 function deleteItem(id) {
     $.ajax({
-        url: 'https://localhost:44307/ToDo/DeleteToDoItem',
+        url: '/ToDo/DeleteToDoItem',
         type: 'DELETE',
         data: {
             itemID: parseInt(id)
@@ -28,4 +28,8 @@ function deleteItem(id) {
             }
         }
     });
+}
+
+function editItem(id) {
+    window.location.href = "https://localhost:44307/ToDo/AddEditToDoItem/" + id;
 }

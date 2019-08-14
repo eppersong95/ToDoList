@@ -22,16 +22,23 @@ else
     {
         var changeStatusEvent = "changeStatusOfItem(" + item.ID + ", $(this).prop('checked'))";
         var deleteItemEvent = "deleteItem(" + item.ID + ")";
-        <div class="row top-buffer toDo-lowPriority">
-            <div class="col-sm-1 toDo-cb">
-                @Html.CheckBoxFor(m => item.IsComplete, new { onclick = @changeStatusEvent })
+        var editItemLink = "editItem(" + item.ID + ")";
+        <div class="container">
+            <div class="row top-buffer align-items-center toDo-lowPriority">
+                <div class="col-sm-1 toDo-cb">
+                    @Html.CheckBoxFor(m => item.IsComplete, new { onclick = @changeStatusEvent })
+                </div>
+                <div class="col-sm-7 toDo-description">
+                    @Html.Label("", item.Description)
+                </div>
+                <div class="col-sm-4 toDo-buttonGroup">
+                    <button onclick=@editItemLink class="btn btn-default"> Edit </button>
+                    <button onclick=@deleteItemEvent class="btn btn-warning"> Delete </button>
+                </div>
             </div>
-            <div class="col-sm-9 toDo-description">
-                @Html.Label("", item.Description)
-            </div>
-            <div class="col-sm-2">
-                <button onclick= @deleteItemEvent class="btn btn-primary"> Delete </button>
-            </div>
+            @*<div class="col-sm-2">
+                <button onclick=@editItemLink class ="btn btn-warning"> Edit </button>
+            </div>*@
         </div>
     }
 }

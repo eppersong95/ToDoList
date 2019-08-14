@@ -51,3 +51,7 @@ body {
 .toDo-lowPriority {
     background-color: lightyellow;
 }
+
+.toDo-buttonGroup {
+    text-align: right;
+}

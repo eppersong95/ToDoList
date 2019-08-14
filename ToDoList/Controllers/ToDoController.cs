@@ -17,14 +17,14 @@ namespace ToDoList.Controllers
         }
 
         [HttpGet]
-        public IActionResult AddEditToDoItem(int? itemID = 0)
+        public IActionResult AddEditToDoItem(long id = 0)
         {
             var toDoItem = new ToDoItem();
 
-            if (itemID != 0)
+            if (id != 0)
             {
                 toDoItem = _context.ToDoItems
-                     .Where(m => m.ID == itemID)
+                     .Where(m => m.ID == id)
                      .Single();
             }
 
@@ -70,7 +70,7 @@ namespace ToDoList.Controllers
         {
             var existingItem = _context.ToDoItems.Where(m => m.ID == item.ID).Single();
             existingItem.Description = item.Description;
-            existingItem.IsComplete = item.IsComplete;
+            existingItem.PriorityID = item.PriorityID;
 
             _context.ToDoItems.Update(existingItem);
             _context.SaveChanges();
