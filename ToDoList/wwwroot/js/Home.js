@@ -1,4 +1,8 @@
-﻿function changeStatusOfItem(id, isChecked) {
+﻿$(document).ready(function () {
+    //process toast messages here
+});
+
+function changeStatusOfItem(id, isChecked) {
     $.post("https://localhost:44307/ToDo/ChangeItemStatus",
         {
             itemID: parseInt(id),
@@ -6,9 +10,9 @@
         },
         function (data) {
             if (data.isSuccess === "1") {
-                alert('winner');
+                makeToast(true, "Item status updated");
             } else {
-                alert('loser');
+                makeToast(false, "Unable to update item status");
             }
         });
 }
@@ -22,9 +26,9 @@ function deleteItem(id) {
         },
         success: function (result) {
             if (result.isSuccess === "true") {
-                alert('deleted');
+                makeToast(true, "Item deleted");
             } else {
-                alert('failed');
+                makeToast(false, "Unable to delete item");
             }
         }
     });
@@ -32,4 +36,12 @@ function deleteItem(id) {
 
 function editItem(id) {
     window.location.href = "https://localhost:44307/ToDo/AddEditToDoItem/" + id;
+}
+
+function makeToast(isSuccess, message) {
+    if (isSuccess) {
+        toastr.success(message, "Success!");
+    } else {
+        toastr.error(message, "Error");
+    }
 }

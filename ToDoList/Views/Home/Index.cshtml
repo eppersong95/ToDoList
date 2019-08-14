@@ -8,7 +8,7 @@
     <h1> //TODO List </h1>
 </div>
 
-<button onclick=window.location.href="https://localhost:44307/ToDo/AddEditToDoItem" class="btn btn-primary"> Add new item </button>
+<button onclick=window.location.href ="https://localhost:44307/ToDo/AddEditToDoItem" class="btn btn-primary"> Add new item </button>
 
 @if (!Model.Any())
 {
@@ -37,11 +37,12 @@ else
                 </div>
             </div>
             @*<div class="col-sm-2">
-                <button onclick=@editItemLink class ="btn btn-warning"> Edit </button>
-            </div>*@
+                    <button onclick=@editItemLink class ="btn btn-warning"> Edit </button>
+                </div>*@
         </div>
     }
 }
 
-@*<script type="text/javascript" src="~/lib/jquery/dist/jquery.js"></script>*@
-<script type="text/javascript" src="~/js/Home.js"></script>
+@section Scripts {
+    <script type="text/javascript" src="~/js/Home.js"></script>
+}
