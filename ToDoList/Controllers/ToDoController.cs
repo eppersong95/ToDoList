@@ -85,5 +85,12 @@ namespace ToDoList.Controllers
 
             return new JsonResult(new { isSuccess = "true" });
         }
+
+        public IActionResult GetToDoList()
+        {
+            var vm = _context.ToDoItems.ToList();
+
+            return View("_ToDoList", vm);
+        }
     }
 }

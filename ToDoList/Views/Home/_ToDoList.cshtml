@@ -1,0 +1,32 @@
+﻿@model IEnumerable<ToDoItem>
+
+@if (!Model.Any())
+{
+    <h2> There's nothing here. Add a todo item now! </h2>
+}
+else
+{
+    foreach (var item in Model)
+    {
+        var changeStatusEvent = "changeStatusOfItem(" + item.ID + ", $(this).prop('checked'))";
+        var deleteItemEvent = "deleteItem(" + item.ID + ")";
+        var editItemLink = "editItem(" + item.ID + ")";
+        <div class="container">
+            <div class="row top-buffer align-items-center toDo-lowPriority">
+                <div class="col-sm-1 toDo-cb">
+                    @Html.CheckBoxFor(m => item.IsComplete, new { onclick = @changeStatusEvent })
+                </div>
+                <div class="col-sm-7 toDo-description">
+                    @Html.Label("", item.Description)
+                </div>
+                <div class="col-sm-4 toDo-buttonGroup">
+                    <button onclick=@editItemLink class="btn btn-default"> Edit </button>
+                    <button onclick=@deleteItemEvent class="btn btn-warning"> Delete </button>
+                </div>
+            </div>
+            @*<div class="col-sm-2">
+                    <button onclick=@editItemLink class ="btn btn-warning"> Edit </button>
+                </div>*@
+        </div>
+    }
+}
