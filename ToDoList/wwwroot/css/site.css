@@ -37,5 +37,17 @@ body {
 }
 
 .top-buffer {
-    margin-top: 20px;
+    margin-top: 10px;
+}
+
+.toDo-cb {
+    text-align: right;
+}
+
+.toDo-description {
+    text-align: left;
+}
+
+.toDo-lowPriority {
+    background-color: lightyellow;
 }

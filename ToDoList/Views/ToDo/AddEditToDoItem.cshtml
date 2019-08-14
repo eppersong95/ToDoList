@@ -1,0 +1,20 @@
+﻿@model ToDoList.Models.ToDoItem
+
+@using (Html.BeginForm("AddEditToDoItem", "ToDo", FormMethod.Post, new { @class = "top-buffer" }))
+{
+    <div id="ItemDescription" class="form-group">
+        @Html.LabelFor(m => Model.Description)
+        @Html.TextBoxFor(m => Model.Description, "", new { @class = "form-control" })
+    </div>
+    <div id="ItemPriority" class="form-group">
+        @Html.LabelFor(m => Model.PriorityID)
+        @Html.DropDownListFor(m => Model.PriorityID,
+                new List<SelectListItem>
+                {
+                    new SelectListItem {Value = "1", Text = "Low" },
+                    new SelectListItem {Value = "2", Text = "Medium" },
+                    new SelectListItem {Value = "3", Text = "High"}
+                }, new { @class = "form-control" })
+    </div>
+    <input type="submit" />
+}

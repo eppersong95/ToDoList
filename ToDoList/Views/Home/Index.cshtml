@@ -8,7 +8,8 @@
     <h1> //TODO List </h1>
 </div>
 
-@Html.ActionLink("Add New Item", "AddEditToDoItem", "Home")
+<button onclick=window.location.href="https://localhost:44307/ToDo/AddEditToDoItem" class="btn btn-primary"> Add new item </button>
+
 @if (!Model.Any())
 {
     <h2> There's nothing here. Add a todo item now! </h2>
@@ -19,13 +20,21 @@ else
 {
     @foreach (var item in Model)
     {
-        var onClick = "changeStatusOfItem(" + item.ID + ", $(this).prop('checked'))";
-        <div class="row">
-            @Html.CheckBoxFor(m => item.IsComplete, new { onclick = @onClick, @class="col-sm-1" })
-            @Html.Label("", item.Description, new { @class = "col-sm-11" })
+        var changeStatusEvent = "changeStatusOfItem(" + item.ID + ", $(this).prop('checked'))";
+        var deleteItemEvent = "deleteItem(" + item.ID + ")";
+        <div class="row top-buffer toDo-lowPriority">
+            <div class="col-sm-1 toDo-cb">
+                @Html.CheckBoxFor(m => item.IsComplete, new { onclick = @changeStatusEvent })
+            </div>
+            <div class="col-sm-9 toDo-description">
+                @Html.Label("", item.Description)
+            </div>
+            <div class="col-sm-2">
+                <button onclick= @deleteItemEvent class="btn btn-primary"> Delete </button>
+            </div>
         </div>
     }
 }
 
-<script type="text/javascript" src="~/lib/jquery/dist/jquery.js"></script>
+@*<script type="text/javascript" src="~/lib/jquery/dist/jquery.js"></script>*@
 <script type="text/javascript" src="~/js/Home.js"></script>

@@ -13,6 +13,9 @@ namespace ToDoList.Models
         [Required]
         public string Description { get; set; }
         [Required]
+        [Display(Name = "Priority")]
+        public int PriorityID { get; set; }
+        [Required]
         public DateTime DateCreated { get; set; }
     }
 }

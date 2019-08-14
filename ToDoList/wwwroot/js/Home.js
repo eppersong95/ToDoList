@@ -1,5 +1,5 @@
 ﻿function changeStatusOfItem(id, isChecked) {
-    $.post("https://localhost:44307/Home/ChangeItemStatus",
+    $.post("https://localhost:44307/ToDo/ChangeItemStatus",
         {
             itemID: parseInt(id),
             isComplete: isChecked
@@ -11,4 +11,21 @@
                 alert('loser');
             }
         });
+}
+
+function deleteItem(id) {
+    $.ajax({
+        url: 'https://localhost:44307/ToDo/DeleteToDoItem',
+        type: 'DELETE',
+        data: {
+            itemID: parseInt(id)
+        },
+        success: function (result) {
+            if (result.isSuccess === "true") {
+                alert('deleted');
+            } else {
+                alert('failed');
+            }
+        }
+    });
 }

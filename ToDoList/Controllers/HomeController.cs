@@ -20,66 +20,6 @@ namespace ToDoList.Controllers
             return View(toDoItems);
         }
 
-        [HttpGet]
-        public IActionResult AddEditToDoItem(int? itemID = 0)
-        {
-            var toDoItem = new ToDoItem();
-
-            if (itemID != 0)
-            {
-               toDoItem =  _context.ToDoItems
-                    .Where(m => m.ID == itemID)
-                    .Single();
-            }
-
-            return View(toDoItem);
-        }
-
-        [HttpPost]
-        public IActionResult AddEditToDoItem(ToDoItem item)
-        {
-            if (item.ID == 0)
-            {
-                AddNewToDoItem(item);
-            }
-
-            else
-            {
-                UpdateToDoItem(item);
-            }
-
-            return RedirectToAction("Index", "Home");
-        }
-
-        [HttpPost]
-        public JsonResult ChangeItemStatus(long itemID, bool isComplete)
-        {
-            var toDoItem = _context.ToDoItems.Where(m => m.ID == itemID).Single();
-            toDoItem.IsComplete = isComplete;
-
-            _context.Update(toDoItem);
-            _context.SaveChanges();
-
-            return new JsonResult(new { isSuccess = "1" });
-        }
-
-        private void AddNewToDoItem(ToDoItem item)
-        {
-            item.DateCreated = DateTime.Now;
-            _context.Add(item);
-            _context.SaveChanges();
-        }
-
-        private void UpdateToDoItem(ToDoItem item)
-        {
-            var existingItem = _context.ToDoItems.Where(m => m.ID == item.ID).Single();
-            existingItem.Description = item.Description;
-            existingItem.IsComplete = item.IsComplete;
-
-            _context.ToDoItems.Update(existingItem);
-            _context.SaveChanges();
-        }
-
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
