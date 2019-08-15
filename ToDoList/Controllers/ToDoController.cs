@@ -59,7 +59,7 @@ namespace ToDoList.Controllers
             _context.Update(toDoItem);
             _context.SaveChanges();
 
-            return new JsonResult(new { isSuccess = "1" });
+            return Json(new { isSuccess = "1" });
         }
 
         private void AddNewToDoItem(ToDoItem item)
@@ -94,10 +94,14 @@ namespace ToDoList.Controllers
         {
             var completedItems = _context.ToDoItems.Where(m => m.IsComplete).ToList();
 
+            if (completedItems.Count == 0)
+            {
+                return Json(new { isSuccess = "false" });
+            }
             _context.RemoveRange(completedItems);
             _context.SaveChanges();
 
-            return new JsonResult(new { isSuccess = "true" });
+            return Json(new { isSuccess = "true" });
         }
 
         [HttpGet]

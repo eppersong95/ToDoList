@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    //process toast messages here
+    requeryList();
 });
 
 function changeStatusOfItem(id, isChecked) {
@@ -71,6 +71,7 @@ function rebuildList(itemArray) {
         var changeStatusEvent = 'changeStatusOfItem(' + itemArray[i].id + ',' + '$(this).prop("checked"))';
         var deleteItemEvent = 'deleteItem(' + itemArray[i].id + ')';
         var editItemEvent = 'editItem(' + itemArray[i].id + ')';
+        var descriptionCss = getCssBasedOnPriority(itemArray[i].priorityID);
 
         newHtml += '<div class="row top-buffer item-row">';
             newHtml += '<div class="col-sm-1 toDo-cb">';
@@ -79,8 +80,8 @@ function rebuildList(itemArray) {
                     newHtml+= ' checked'
                 }
                 newHtml += ' onclick = ' + changeStatusEvent + '>';
-            newHtml += '</div >';
-            newHtml += '<div class="col-sm-7 toDo-description">';
+        newHtml += '</div >';
+        newHtml += '<div class="col-sm-7 ' + descriptionCss + '">';
                 newHtml += '<p>' + itemArray[i].description + '</p>';
             newHtml += '</div>';
         newHtml += '<div class="col-sm-4 btn-toolbar toDo-buttonGroup">';
@@ -90,9 +91,18 @@ function rebuildList(itemArray) {
         newHtml += '</div>';
     }
     newHtml += '</div>';
-    debugger;
     $('#toDoList').html(newHtml);
 }
+
+function getCssBasedOnPriority(priorityId) {
+    if (priorityId == 1) {
+        return 'toDo-lowPriority';
+    } else if (priorityId == 2) {
+        return 'toDo-mediumPriority';
+    } else {
+        return 'toDo-highPriority';
+    }
+};
 
 function getBaseUrl() {
     return window.location.protocol + "//" + window.location.host;
@@ -107,7 +117,7 @@ function deleteCompletedItems() {
                 requeryList();
                 makeToast(true, "Items deleted");
             } else {
-                makeToast(false, "Unable to delete items");
+                makeToast(false, "No completed items found");
             }
         }
     });

@@ -51,15 +51,20 @@ body {
 
 .toDo-lowPriority {
     text-decoration: underline;
-    text-decoration-color: red;
+    text-decoration-color: green;
+    color: green;
 }
 
 .toDo-mediumPriority {
-    background-color: lightyellow;
+    text-decoration: underline;
+    text-decoration-color: orange;
+    color: orange;
 }
 
 .toDo-highPriority {
-    background-color: lightcoral;
+    text-decoration: underline;
+    text-decoration-color: red;
+    color: red;
 }
 
 .toDo-buttonGroup{
