@@ -29,7 +29,7 @@ function deleteItem(id) {
         },
         success: function (result) {
             if (result.isSuccess === "true") {
-                requeryList();
+                //requeryList();
                 makeToast(true, "Item deleted");
             } else {
                 makeToast(false, "Unable to delete item");
@@ -48,15 +48,4 @@ function makeToast(isSuccess, message) {
     } else {
         toastr.error(message, "Error");
     }
-}
-
-function requeryList() {
-    $.ajax({
-        url: '/ToDo/GetToDoList',
-        type: 'GET',
-        success: function (result) {
-            alert('succ');
-            $('#toDoList').html(result);
-        }
-    });
 }

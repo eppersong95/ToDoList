@@ -44,14 +44,33 @@ body {
     text-align: right;
 }
 
-.toDo-description {
+.toDo-description,
+.action-buttonGroup {
     text-align: left;
 }
 
 .toDo-lowPriority {
+    background-color: lightgreen;
+}
+
+.toDo-mediumPriority {
     background-color: lightyellow;
 }
 
-.toDo-buttonGroup {
+.toDo-highPriority {
+    background-color: lightcoral;
+}
+
+.toDo-buttonGroup{
     text-align: right;
+}
+
+
+.item-row {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.item-row:hover {
+    background-color: lightgrey;
 }

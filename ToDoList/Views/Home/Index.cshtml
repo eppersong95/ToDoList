@@ -8,7 +8,11 @@
     <h1> //TODO List </h1>
 </div>
 
-<button onclick="addNewItem()" class="btn btn-primary"> Add new item </button>
+<div class="row">
+    <div class="col-sm-12 action-buttonGroup">
+        <button onclick="addNewItem()" class="btn btn-primary"> Add new item </button>
+    </div>
+</div>
 
 <div id="toDoList">
     @Html.Partial("_ToDoList", Model)

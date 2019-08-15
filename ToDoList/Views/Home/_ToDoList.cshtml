@@ -11,10 +11,25 @@ else
         var changeStatusEvent = "changeStatusOfItem(" + item.ID + ", $(this).prop('checked'))";
         var deleteItemEvent = "deleteItem(" + item.ID + ")";
         var editItemLink = "editItem(" + item.ID + ")";
+        var rowClass = "";
+        switch (item.PriorityID)
+        {
+            case 1:
+                rowClass = "toDo-lowPriority";
+                break;
+            case 2:
+                rowClass = "toDo-mediumPriority";
+                break;
+            case 3:
+                rowClass = "toDo-highPriority";
+                break;
+            default:
+                break;
+        }
         <div class="container">
-            <div class="row top-buffer align-items-center toDo-lowPriority">
+            <div class="row top-buffer item-row">
                 <div class="col-sm-1 toDo-cb">
-                    @Html.CheckBoxFor(m => item.IsComplete, new { onclick = @changeStatusEvent })
+                    @Html.CheckBoxFor(m => item.IsComplete, new { onclick = @changeStatusEvent, @class="custom-control-input"})
                 </div>
                 <div class="col-sm-7 toDo-description">
                     @Html.Label("", item.Description)

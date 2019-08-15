@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ToDoList.Models;
+using System.Web;
 
 namespace ToDoList.Controllers
 {
@@ -86,11 +87,12 @@ namespace ToDoList.Controllers
             return new JsonResult(new { isSuccess = "true" });
         }
 
+        [HttpGet]
         public IActionResult GetToDoList()
         {
             var vm = _context.ToDoItems.ToList();
-
-            return View("_ToDoList", vm);
+            var val = PartialView("_ToDoList", vm);
+            return Json(new { val });
         }
     }
 }
