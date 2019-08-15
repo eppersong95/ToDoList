@@ -21,12 +21,14 @@ namespace ToDoList.Controllers
         public IActionResult AddEditToDoItem(long id = 0)
         {
             var toDoItem = new ToDoItem();
+            ViewData["Title"] = "Add a New Item";
 
             if (id != 0)
             {
                 toDoItem = _context.ToDoItems
                      .Where(m => m.ID == id)
                      .Single();
+                ViewData["Title"] = "Edit Item";
             }
 
             return View(toDoItem);
@@ -87,12 +89,22 @@ namespace ToDoList.Controllers
             return new JsonResult(new { isSuccess = "true" });
         }
 
+        [HttpDelete]
+        public IActionResult DeleteCompletedToDoItems()
+        {
+            var completedItems = _context.ToDoItems.Where(m => m.IsComplete).ToList();
+
+            _context.RemoveRange(completedItems);
+            _context.SaveChanges();
+
+            return new JsonResult(new { isSuccess = "true" });
+        }
+
         [HttpGet]
         public IActionResult GetToDoList()
         {
-            var vm = _context.ToDoItems.ToList();
-            var val = PartialView("_ToDoList", vm);
-            return Json(new { val });
+            var itemList = _context.ToDoItems.ToList();
+            return Json(itemList);
         }
     }
 }

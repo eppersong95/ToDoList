@@ -1,9 +1,5 @@
 ﻿@model IEnumerable<ToDoList.Models.ToDoItem>
 
-@{
-    ViewData["Title"] = "Home Page";
-}
-
 <div class="jumbotron ">
     <h1> //TODO List </h1>
 </div>
@@ -11,12 +7,41 @@
 <div class="row">
     <div class="col-sm-12 action-buttonGroup">
         <button onclick="addNewItem()" class="btn btn-primary"> Add new item </button>
+        <button onclick="deleteCompletedItems()" class="btn btn-danger"> Delete completed items </button>
     </div>
 </div>
 
 <div id="toDoList">
-    @Html.Partial("_ToDoList", Model)
+    @if (!Model.Any())
+    {
+        <h2> There's nothing here. Add a todo item now! </h2>
+    }
+    else
+    {
+        foreach (var item in Model)
+        {
+            var changeStatusEvent = "changeStatusOfItem(" + item.ID + ", $(this).prop('checked'))";
+            var deleteItemEvent = "deleteItem(" + item.ID + ")";
+            var editItemLink = "editItem(" + item.ID + ")";
+
+            <div class="container">
+                <div class="row top-buffer item-row">
+                    <div class="col-sm-1 toDo-cb">
+                        <input type="checkbox" checked="@item.IsComplete" onclick="@changeStatusEvent" />
+                    </div>
+                    <div class="col-sm-7 toDo-description">
+                        <p class="toDo-lowPriority"> @item.Description </p>
+                    </div>
+                    <div class="col-sm-4 btn-toolbar toDo-buttonGroup">
+                        <button onclick=@editItemLink class="btn toDo-button btn-warning"> Edit </button>
+                        <button onclick=@deleteItemEvent class="btn toDo-button btn-danger"> Delete </button>
+                    </div>
+                </div>
+            </div>
+        }
+    }
 </div>
+
 
 @section Scripts {
     <script type="text/javascript" src="~/js/Home.js"></script>

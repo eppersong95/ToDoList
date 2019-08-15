@@ -1,5 +1,7 @@
 ﻿@model ToDoList.Models.ToDoItem
 
+<h1> @ViewData["Title"] </h1>
+
 @using (Html.BeginForm("AddEditToDoItem", "ToDo", FormMethod.Post, new { @class = "top-buffer" }))
 {
     <div id="ItemDescription" class="form-group">
