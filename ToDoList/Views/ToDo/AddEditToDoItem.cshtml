@@ -2,7 +2,7 @@
 
 <h1> @ViewData["Title"] </h1>
 
-@using (Html.BeginForm("AddEditToDoItem", "ToDo", FormMethod.Post, new { @class = "top-buffer" }))
+@*@using (Html.BeginForm("AddEditToDoItem", "ToDo", FormMethod.Post, new { @class = "top-buffer" }))
 {
     <div id="ItemDescription" class="form-group">
         @Html.LabelFor(m => Model.Description)
@@ -18,5 +18,26 @@
                     new SelectListItem {Value = "3", Text = "High"}
                 }, new { @class = "form-control" })
     </div>
-    <input type="submit" class="form-control btn btn-primary"/>
+    <input type="submit" class="form-control btn btn-primary"/>*@
+}
+
+<div id="app">
+    <form @@submit.prevent="submitForm">
+        <div class="form-group">
+            <label for="Description"> Description </label>
+            <input type="text" class="form-control" v-model ="Description" />
+        </div>
+        <div class="form-group">
+            <label for="Priority"> Priority </label>
+            <select v-model="PriorityID">
+                <option value="1"> Low </option>
+                <option value="2"> Medium </option>
+                <option value="3"> High </option>
+            </select>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.3/vue.min.js"</script>
 }
