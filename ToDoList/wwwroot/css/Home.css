@@ -38,3 +38,7 @@
 .item-row:hover {
     background-color: lightgrey;
 }
+
+.sort-label {
+    padding-right: 5px;
+}

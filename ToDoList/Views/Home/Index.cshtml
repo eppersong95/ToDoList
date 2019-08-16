@@ -3,11 +3,12 @@
 </div>
 
 <div class="row">
-    <div class="col-sm-6 action-buttonGroup">
+    <div class="col-sm-5 action-buttonGroup">
         <button onclick="addEditItem()" class="btn btn-primary"> Add new item </button>
         <button onclick="deleteCompletedItems()" class="btn btn-danger"> Delete completed items </button>
     </div>
-    <div class="col-sm-6 ">
+    <div class="col-sm-7 form-inline" style="text-align:right">
+        <label for="sortSelection" class="sort-label"> Sort By:          </label>
         <select id="sortSelection" class="form-control">
             <option value="1" selected> New to Old </option>
             <option value="2" > Old to New </option>
