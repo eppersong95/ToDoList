@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ToDoList.Models;
 using ToDoList.ViewModels;
-using System.Web;
 using ToDoList.Enums;
 
 namespace ToDoList.Controllers
