@@ -16,8 +16,7 @@ namespace ToDoList.Controllers
 
         public IActionResult Index()
         { 
-            var toDoItems = _context.ToDoItems.ToList();
-            return View(toDoItems);
+            return View();
         }
 
         public IActionResult About()

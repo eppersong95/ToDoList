@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ToDoList.Models;
+using ToDoList.ViewModels;
 using System.Web;
+using ToDoList.Enums;
 
 namespace ToDoList.Controllers
 {
@@ -12,31 +14,62 @@ namespace ToDoList.Controllers
     {
         private ApplicationDbContext _context = new ApplicationDbContext();
 
-        public IActionResult Index()
+        //used for building the list in the UI
+        [HttpGet]
+        public IActionResult GetToDoList(int sortID)
         {
-            return View();
+            var itemList = new List<ToDoItem>();
+
+            switch ((SortOptions)sortID)
+            {
+                case SortOptions.NewestFirst:
+                    itemList = _context.ToDoItems.OrderByDescending(m => m.ID).ToList();
+                    break;
+                case SortOptions.OldestFirst:
+                    itemList = _context.ToDoItems.OrderBy(m => m.ID).ToList();
+                    break;
+                case SortOptions.PriorityDesc:
+                    itemList = _context.ToDoItems.OrderByDescending(m => m.PriorityID).ToList();
+                    break;
+                case SortOptions.PriorityAsc:
+                    itemList = _context.ToDoItems.OrderBy(m => m.PriorityID).ToList();
+                    break;
+                default: //completed at bottom
+                    itemList = _context.ToDoItems.OrderBy(m => m.IsComplete).ToList();
+                    break;
+            }
+
+            return Json(itemList);
         }
 
+        //returns a form for adding or editing an item
         [HttpGet]
         public IActionResult AddEditToDoItem(long id = 0)
         {
-            var toDoItem = new ToDoItem();
-            ViewData["Title"] = "Add a New Item";
+            var toDoItemVM = new ToDoItemFormVM();
 
             if (id != 0)
             {
-                toDoItem = _context.ToDoItems
+                var existingItem = _context.ToDoItems
                      .Where(m => m.ID == id)
                      .Single();
-                ViewData["Title"] = "Edit Item";
+                toDoItemVM = new ToDoItemFormVM(existingItem);
             }
 
-            return View(toDoItem);
+            return View(toDoItemVM);
         }
 
+        //gets input from form and processes it in the database
         [HttpPost]
         public IActionResult AddEditToDoItem(ToDoItem item)
         {
+            //don't process invalid data
+            if (!ModelState.IsValid)
+            {
+                var itemFormVM = new ToDoItemFormVM(item);
+                return View("AddEditToDoItem", itemFormVM);
+            }
+
             if (item.ID == 0)
             {
                 AddNewToDoItem(item);
@@ -50,25 +83,12 @@ namespace ToDoList.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        [HttpPost]
-        public JsonResult ChangeItemStatus(long itemID, bool isComplete)
-        {
-            var toDoItem = _context.ToDoItems.Where(m => m.ID == itemID).Single();
-            toDoItem.IsComplete = isComplete;
-
-            _context.Update(toDoItem);
-            _context.SaveChanges();
-
-            return Json(new { isSuccess = "1" });
-        }
-
         private void AddNewToDoItem(ToDoItem item)
         {
             item.DateCreated = DateTime.Now;
             _context.Add(item);
             _context.SaveChanges();
         }
-
         private void UpdateToDoItem(ToDoItem item)
         {
             var existingItem = _context.ToDoItems.Where(m => m.ID == item.ID).Single();
@@ -79,6 +99,19 @@ namespace ToDoList.Controllers
             _context.SaveChanges();
         }
 
+        [HttpPost]
+        public JsonResult ChangeItemStatus(long itemID, bool isComplete)
+        {
+            var toDoItem = _context.ToDoItems.Where(m => m.ID == itemID).Single();
+            toDoItem.IsComplete = isComplete;
+
+            _context.Update(toDoItem);
+            _context.SaveChanges();
+
+            return Json(new { isSuccess = true });
+        }
+
+
         [HttpDelete]
         public IActionResult DeleteToDoItem(long itemID)
         {
@@ -86,7 +119,7 @@ namespace ToDoList.Controllers
             _context.Remove(itemToDelete);
             _context.SaveChanges();
 
-            return new JsonResult(new { isSuccess = "true" });
+            return new JsonResult(new { isSuccess = true });
         }
 
         [HttpDelete]
@@ -96,19 +129,12 @@ namespace ToDoList.Controllers
 
             if (completedItems.Count == 0)
             {
-                return Json(new { isSuccess = "false" });
+                return Json(new { isSuccess = false });
             }
             _context.RemoveRange(completedItems);
             _context.SaveChanges();
 
-            return Json(new { isSuccess = "true" });
-        }
-
-        [HttpGet]
-        public IActionResult GetToDoList()
-        {
-            var itemList = _context.ToDoItems.ToList();
-            return Json(itemList);
+            return Json(new { isSuccess = true });
         }
     }
 }

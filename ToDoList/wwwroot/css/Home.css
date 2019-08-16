@@ -1,0 +1,40 @@
+﻿.toDo-cb,
+.toDo-buttonGroup {
+    text-align: right;
+}
+
+.toDo-description,
+.action-buttonGroup {
+    text-align: left;
+}
+
+.toDo-lowPriority {
+    text-decoration: underline;
+    text-decoration-color: green;
+    color: green;
+}
+
+.toDo-mediumPriority {
+    text-decoration: underline;
+    text-decoration-color: orange;
+    color: orange;
+}
+
+.toDo-highPriority {
+    text-decoration: underline;
+    text-decoration-color: red;
+    color: red;
+}
+
+.toDo-button {
+    float: none !important;
+}
+
+.item-row {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.item-row:hover {
+    background-color: lightgrey;
+}

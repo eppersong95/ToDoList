@@ -1,16 +1,25 @@
-﻿@model IEnumerable<ToDoList.Models.ToDoItem>
-
-<div class="jumbotron ">
+﻿<div class="jumbotron ">
     <h1> //TODO List </h1>
 </div>
 
 <div class="row">
-    <div class="col-sm-12 action-buttonGroup">
-        <button onclick="addNewItem()" class="btn btn-primary"> Add new item </button>
+    <div class="col-sm-6 action-buttonGroup">
+        <button onclick="addEditItem()" class="btn btn-primary"> Add new item </button>
         <button onclick="deleteCompletedItems()" class="btn btn-danger"> Delete completed items </button>
+    </div>
+    <div class="col-sm-6 ">
+        <select id="sortSelection" class="form-control">
+            <option value="1" selected> New to Old </option>
+            <option value="2" > Old to New </option>
+            <option value="3" > Priority: High to Low </option>
+            <option value="4"> Priority: Low to High  </option>
+            <option value="5"> Completed </option>
+        </select>
     </div>
 </div>
 
+@*I decided it made more sense to populate this in the js, since it was rebuilding the list via AJAX anyway
+    Better to have this code in one place instead of two*@
 <div id="toDoList">
     @*@if (!Model.Any())
     {
@@ -42,6 +51,9 @@
     }*@
 </div>
 
+@section Styles {
+    <link rel="stylesheet" type="text/css" href="~/css/Home.css" />
+} 
 
 @section Scripts {
     <script type="text/javascript" src="~/js/Home.js"></script>
