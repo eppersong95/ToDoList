@@ -7,6 +7,7 @@
     <div id="ItemDescription" class="form-group">
         @Html.LabelFor(m => Model.Description)
         @Html.TextBoxFor(m => Model.Description, "", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Description)
     </div>
     <div id="ItemPriority" class="form-group">
         @Html.LabelFor(m => Model.PriorityID)
@@ -17,6 +18,11 @@
                     new SelectListItem {Value = "2", Text = "Medium" },
                     new SelectListItem {Value = "3", Text = "High"}
                 }, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.PriorityID)
     </div>
     <input type="submit" class="form-control btn btn-primary"/>
 }
+
+@section Scripts {
+    <script type="text/javascript" src="~/lib/jquery-validation-unobtrusive/"></script>
+} 

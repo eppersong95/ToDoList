@@ -11,6 +11,7 @@ namespace ToDoList.Models
         [Required]
         public bool IsComplete { get; set; }
         [Required]
+        [StringLength(100)]
         public string Description { get; set; }
         [Required]
         [Display(Name = "Priority")]

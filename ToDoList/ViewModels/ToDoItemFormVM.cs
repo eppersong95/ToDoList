@@ -11,7 +11,8 @@ namespace ToDoList.ViewModels
     {
         public int ID { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please enter a description")]
+        [StringLength(100, ErrorMessage = "Descriptions cannot exceed 100 characters")]
         public string Description { get; set; }
         [Required]
         [Display(Name = "Priority")]
