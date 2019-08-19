@@ -16,24 +16,31 @@ namespace ToDoList.Controllers
         [HttpGet]
         public IActionResult GetToDoList(int sortID)
         {
-            var itemList = new List<ToDoItem>();
+            var itemList = _context.ToDoItems
+                .Select(m => new
+                {
+                    m.ID,
+                    m.Description,
+                    m.PriorityID,
+                    m.IsComplete
+                }).ToList();
 
             switch ((SortOptions)sortID)
             {
                 case SortOptions.NewestFirst:
-                    itemList = _context.ToDoItems.OrderByDescending(m => m.ID).ToList();
+                    itemList = itemList.OrderByDescending(m => m.ID).ToList();
                     break;
                 case SortOptions.OldestFirst:
-                    itemList = _context.ToDoItems.OrderBy(m => m.ID).ToList();
+                    itemList = itemList.OrderBy(m => m.ID).ToList();
                     break;
                 case SortOptions.PriorityDesc:
-                    itemList = _context.ToDoItems.OrderByDescending(m => m.PriorityID).ToList();
+                    itemList = itemList.OrderByDescending(m => m.PriorityID).ToList();
                     break;
                 case SortOptions.PriorityAsc:
-                    itemList = _context.ToDoItems.OrderBy(m => m.PriorityID).ToList();
+                    itemList = itemList.OrderBy(m => m.PriorityID).ToList();
                     break;
                 default: //completed at bottom
-                    itemList = _context.ToDoItems.OrderBy(m => m.IsComplete).ToList();
+                    itemList = itemList.OrderBy(m => m.IsComplete).ToList();
                     break;
             }
 
